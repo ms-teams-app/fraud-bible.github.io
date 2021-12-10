@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-        <title>FalconFraud || Bible</title>
+        <title>FraudBibleOnline || Bible</title>
         <meta property="og:type" content="website">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://fonts.googleapis.com/css?family=Red+Hat+Text" rel="stylesheet">
@@ -91,7 +91,7 @@ article {
     </head>
     <body onload="start()" style="background-color:#323232">
         <div style="text-align: center;">
-        <h1 id="info">FalconFraud</h1>
+        <h1 id="info">FraudBibleOnline</h1>
         <h3>Want to contribute? Create an account <a style="color: lightblue;" href="index.html">here.</a></h3>
         </div><br>
 <label id="test"></label>
@@ -117,7 +117,7 @@ let html = ""
 const post = data.split("!!!newpost!!!")
 const posts = post.reverse()
 let pagenumber = posts.length
-document.getElementById("info").innerHTML = "FalconFraud Bible - " + (pagenumber - 1) + " pages";
+document.getElementById("info").innerHTML = "FraudBibleOnline - " + (pagenumber - 1) + " pages";
 console.log(posts)
 for (let i = 0; i < posts.length; i++) {
 pagenumber = pagenumber - 1
