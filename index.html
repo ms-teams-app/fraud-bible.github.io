@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Red+Hat+Text" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>FalconFraud | Home</title>
+  </head>
+<style>
+  @font-face {
+  font-family: 'Red Hat Text';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/redhattext/v6/RrQCbohi_ic6B3yVSzGBrMx6ZI_cy1A6Ok2ML7hwZr_QcLVF.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;   
+}
+
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #474747; 
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f; 
+}
+
+body {font-family: Red Hat Text;}
+* {box-sizing: border-box;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #545353;
+  caret-color: white;
+  color: white
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #636363;
+  outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #3d3d3d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #303030;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #474747;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+ 
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+<body style="background-color:#262626">
+<div style="text-align:center">
+<h1 style="color:white">FalconFraud</h1>
+ <label style="color:white">The best online Fraud Bible.</label><br><br>
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button><br>
+<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Log In</button><br><br>                                                                                                             
+</div>
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content">
+    <div class="container">
+      <h1 style="color:white">Sign Up</h1>
+      <p style="color:white" >Please fill in this form to create a ABForum account.</p>
+      <hr>
+      <label style="color:white" for="username"><b>Username</b></label>
+      <input maxlength="20" pattern="[a-zA-Z0-9]+" style="background-color:#545353; color:white" type="text" placeholder="Enter a Username..." name="username" id="username" required>
+
+      <label style="color:white" for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter a Password..." name="psw" id="psw" required>
+
+      <label style="color:white" for="psw-repeat"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password..." name="psw-repeat" id="psw-repeat" required>
+
+      <p style="color:white">By creating an account you agree to ABForum's <a href="https://guypagram.github.io/tos.html" style="color:dodgerblue">Terms of Service</a>.</p>
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="button" onclick="detectstuff()" class="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
+   <div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content">
+    <div class="container">
+      <h1 style="color:white">Log In</h1>
+      <p style="color:white" >Please fill in this form to sign into ABForum</p>
+      <hr>
+      <label style="color:white" for="username2"><b>Username</b></label>
+      <input style="background-color:#545353; color:white" type="text" placeholder="Enter a Username..." name="username2" id="username2" required>
+
+      <label style="color:white" for="psw2"><b>Password</b></label>
+      <input type="password" placeholder="Enter a Password..." name="psw2" id="psw2" required>
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="button" onclick="detectstuff2()" class="signupbtn">Log In</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+   var faunadb = window.faunadb
+  var q = faunadb.query
+  var client = new faunadb.Client({
+    secret: 'fnAEZs-VvSAAyKueI3D5XsO_V80GIyLVcSW41Eom',
+    domain: 'db.eu.fauna.com',
+    scheme: 'https',
+  })
+  
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+  
+  // Get the modal
+var modal2 = document.getElementById('id02');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+}
+  
+  function detectstuff(){
+    
+    
+    if(document.getElementById("psw").value !=  document.getElementById("psw-repeat").value)
+    {
+      alert("Passwords do not match!")
+    }
+    else
+    {
+ 
+client.query(
+  q.Get(
+    q.Match(q.Index('get_user'), document.getElementById("username").value)
+  )
+)
+.then(function(ret){ 
+     
+alert("This name is taken!")
+
+})
+  
+.catch(function(e){
+
+
+
+  let date = new Date();
+    client.query(
+  q.Create(
+    q.Collection('abforum'),
+    { data: { username: document.getElementById("username").value.replace(/\s/g, ""), password:  document.getElementById("psw").value, pfp: "https://i.imgur.com/bq01CCq.jpg"} },
+  )
+)
+.then(function(ret){
+
+     alert("Success! you will now be redirected to your dashboard")
+    localStorage.setItem('username', document.getElementById("username").value.replace(/\s/g, ""));
+    localStorage.setItem('id', ret.ref.value.id);
+    localStorage.setItem('pfp', "https://i.imgur.com/bq01CCq.jpg");
+    localStorage.setItem('password', document.getElementById("psw").value);
+    window.location.href = "file:///C:/Users/guypa/Downloads/ABF/dashboard.html"
+    })
+
+});
+
+    }
+    
+  }
+  
+   
+  function detectstuff2(){
+    
+                    client.query(
+  q.Get(
+    q.Match(q.Index('get_user'), document.getElementById("username2").value)
+  )
+)
+      
+.then(function(ret) {
+                      
+  if(ret.data.password != document.getElementById("psw2").value)  
+  {
+    alert("User and password do not match!")
+  }
+  else{
+   
+    localStorage.setItem('username', document.getElementById("username2").value.replace(/\s/g, ""));
+    localStorage.setItem('id', ret.ref.value.id);
+    localStorage.setItem('pfp', ret.data.pfp);
+    localStorage.setItem('password', document.getElementById("psw2").value);
+    window.location.href ="file:///C:/Users/guypa/Downloads/ABF/dashboard.html"
+  }
+})
+.catch(function(e){
+  alert("User not found.")
+});
+                    
+
+                    
+    
+  }
+  
+  
+</script>
+
+</body>
+</html>
