@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Red+Hat+Text" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb.js"></script>
+
+    <title>FalconFraud || Dashboard</title>
+  </head>
+<style>
+  @font-face {
+  font-family: 'Red Hat Text';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/redhattext/v6/RrQCbohi_ic6B3yVSzGBrMx6ZI_cy1A6Ok2ML7hwZr_QcLVF.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;   
+}
+
+ 
+::-webkit-scrollbar-thumb {
+  background: #474747; 
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f; 
+}
+
+body {font-family: Red Hat Text;}
+* {box-sizing: border-box;}
+  
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #303030;
+  caret-color: white;
+  color: white
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #636363;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+
+button {
+  background-color: #3d3d3d;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+
+</style>
+<body onload="detectstuff()" style="background-color:#262626">
+    <br>
+<form style="border:1px solid #ccc">
+  <div class="container">
+    <h1 style="color:white">Create Page</h1>
+    <p style="color:white">Here you can contribute to the FalconFraud Bible.</p>
+    <hr>    
+    <label style="color:white" for="post"><b>Content</b></label>
+    <textarea maxlength="250" style="width: 100%; resize: vertical; font-family:'Red Hat Text'; padding: 15px; margin: 5px 0 22px 0; display: inline-block; border: none; background: #303030; caret-color: white; color: white" placeholder="Enter something to post..." name="post" id="post" required></textarea>
+  
+    <div class="clearfix">
+      <button type="button" onclick="createpost()" class="signupbtn">Add to Fraud Bible</button>
+      <button type="button" onclick="logout()" class="cancelbtn">Log Out</button>
+    </div>
+  </div>
+</form><br>
+
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1 style="color:white">Edit Profile</h1>
+      <p style="color:white">Here you can choose what is shown when you publish a page.</p>
+      <hr>
+      
+       <label style="color:white" for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter a Password" name="password" id="password" required>
+  
+      
+          <label style="color:white" for="pfp"><b>Profile Picture</b></label>
+      <input type="text" placeholder="Enter a URL" name="pfp" id="pfp" required>
+          
+      <div class="clearfix">
+        <button type="button" onclick="savechanges()" class="signupbtn">Save Changes</button>
+      </div>
+    </div>
+  </form><br>
+
+<form style="border:1px solid #ccc">
+  <div class="container">
+    <h1 style="color:white">Delete Account</h1>
+    <p style="color:white">Once you do this, there is no way of recovering your account.</p>
+    <hr>    
+    <label style="color:white" for="delpassword"><b>Password</b></label>
+    <input type="password" placeholder="Enter a Password" name="delpassword" id="delpassword" required>
+  
+    <div class="clearfix">
+      <button type="button" onclick="deleteaccount()" class="cancelbtn">Delete Account</button>
+    </div>
+  </div>
+</form>
+
+
+<script>
+   var faunadb = window.faunadb
+  var q = faunadb.query
+  var client = new faunadb.Client({
+    secret: 'fnAEZs-VvSAAyKueI3D5XsO_V80GIyLVcSW41Eom',
+    domain: 'db.eu.fauna.com',
+    scheme: 'https',
+  })
+
+  
+  function detectstuff(){
+
+    
+     document.getElementById("pfp").value = localStorage.getItem("pfp")
+    document.getElementById("password").value = localStorage.getItem("password")
+                    
+    
+  }
+
+  function savechanges(){
+    
+    
+   localStorage.setItem("pfp", document.getElementById("pfp").value)
+     localStorage.setItem("password", document.getElementById("password").value)
+    
+   client.query(
+  q.Update(
+    q.Ref(q.Collection('abforum'), localStorage.getItem("id")),
+    {
+      data: {
+        pfp:  document.getElementById("pfp").value,
+        password: document.getElementById("password").value
+      },
+    },
+  )
+)
+.then(function(ret){
+     
+     alert("Your user has been successfully updated.")  
+ window.location.href = "https://falcon-fraud.github.io/dashboard"
+    
+    
+  })
+.catch((err) => console.error('Error: %s', err)) 
+      
+    
+    
+  }
+  
+  
+  function logout(){
+    localStorage.setItem("username", null)
+   localStorage.setItem("pfp", null)
+     localStorage.setItem("password", null)
+     localStorage.setItem("id", null)
+   window.location.href = "https://falcon-fraud.github.io" 
+    
+  }
+  
+  function createpost(){
+    
+    client.query(
+  q.Get(q.Ref(q.Collection('abforum'), '317540272269426887')
+  )
+)
+.then(function(ret){ 
+console.log(ret)
+let date = new Date();
+    client.query(
+  q.Update(
+    q.Ref(q.Collection('abforum'), "317540272269426887"),
+    {
+      data: {
+        posts: ret.data.posts + "!!!newpost!!!" + document.getElementById("post").value.replace(new RegExp('\n','g'), 'linebreak') + "!!!time!!!" + date.toUTCString() + "!!!time!!!!!!uploader!!!" + localStorage.getItem("username") + "!!!uploader!!!!!!pfp!!!" + localStorage.getItem("pfp") + "!!!pfp!!!"
+      },
+    },
+  )
+)
+.then(function(ret){
+     
+     alert("Your post has been added to the Bible.")  
+    
+    
+  })
+  .catch((err) => console.error('Error: %s', err)) 
+
+
+           }
+)
+  
+.catch(function(e){
+           })
+    
+    
+  }
+
+
+  function deleteaccount(){
+
+    client.query(
+  q.Get(
+    q.Match(q.Index('get_user'), localStorage.getItem("username"))
+  )
+)
+      
+.then(function(ret) {
+                      
+  if(ret.data.password != document.getElementById("delpassword").value)  
+  {
+    alert("Password does not match!")
+  }
+  else{
+
+    if (confirm('Are you sure?')){
+  
+      client.query(
+  q.Delete(q.Ref(q.Collection('abforum'), localStorage.getItem("id")))
+)
+.then(function(ret){ 
+  console.log(ret)
+  localStorage.setItem('pfp', null);
+    localStorage.setItem('username', null);
+    localStorage.setItem('id', null);
+    localStorage.setItem('password', null);
+    window.location.href = "https://falcon-fraud.github.io"
+
+
+
+})
+.catch((err) => console.error('Error: %s', err))
+
+    
+
+
+}else{
+ console.log("User cancelled delete option dialog.")
+}
+    
+   
+  }
+})
+.catch(function(e){
+  alert("User not found. If you are seeing this, someone has already deleted your account whilst you are on this page.")
+});
+
+  }
+</script>
+
+</body>
+</html>
