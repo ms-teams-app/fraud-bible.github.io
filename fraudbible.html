@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <title>FalconFraud || Bible</title>
+        <meta property="og:type" content="website">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Red+Hat+Text" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+        <style>
+            ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;   
+}
+
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #292828; 
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #262525; 
+}
+     
+img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+  
+      @font-face {
+  font-family: 'Red Hat Text';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/redhattext/v6/RrQCbohi_ic6B3yVSzGBrMx6ZI_cy1A6Ok2ML7hwZr_QcLVF.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+          
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/robotomono/v13/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_SeW4Ep0.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+hr { height: 1px;
+    border: 0; border-top: 1px solid white;
+    margin: 1em 0; padding: 0;
+width:50%;
+margin-left:25% !important; margin-right:25% !important; 
+}
+
+body {
+  font-family: "Red Hat Text";
+  font-weight: 400;
+  line-height: 1.6;
+  background-color: rgba(17,17,17,.04);
+  color: white;
+}
+
+
+
+main {
+ 
+  max-width: 1000px;
+  padding: 3rem 0 4rem;
+  margin: 2rem auto;
+
+}
+
+article {
+  max-width: 576px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  overflow-wrap: break-word;
+  background-color: #313131;
+  border-radius: 20px;
+  overflow:hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb.js"></script>
+    </head>
+    <body onload="start()" style="background-color:#323232">
+        <div style="text-align: center;">
+        <h1 id="info">FalconFraud</h1>
+        <h3>Want to contribute? Create an account <a style="color: lightblue;" href="index.html">here.</a></h3>
+        </div><br>
+<label id="test"></label>
+  </body>
+    <script>
+        var faunadb = window.faunadb
+  var q = faunadb.query
+  var client = new faunadb.Client({
+    secret: 'fnAEZs-VvSAAyKueI3D5XsO_V80GIyLVcSW41Eom',
+    domain: 'db.eu.fauna.com',
+    scheme: 'https',
+  })
+
+function start(){
+
+    client.query(
+  q.Get(q.Ref(q.Collection('abforum'), '317540272269426887'))
+)
+.then(function (ret){
+    
+let data = ret.data.posts
+let html = ""
+const post = data.split("!!!newpost!!!")
+const posts = post.reverse()
+let pagenumber = posts.length
+document.getElementById("info").innerHTML = "FalconFraud Bible - " + (pagenumber - 1) + " pages";
+console.log(posts)
+for (let i = 0; i < posts.length; i++) {
+pagenumber = pagenumber - 1
+if(posts[i].split("!!!time!!!")[0] == "")
+{
+}
+else
+{
+    html = html + "<article><img style=\"width:30px; height:30px; border-radius:50%\; vertical-align:center\" src=\"" + posts[i].split("!!!pfp!!!")[1] + "\"><p style=\"text-align: center; font-size:14px\"><i>Contributed by <b>" + posts[i].split("!!!uploader!!!")[1] + "</b> on <b>" + posts[i].split("!!!time!!!")[1] + "</b></i></p><hr><label style=\"vertical-align:middle; font-family:'Roboto Mono'; font-size:15px\">" + posts[i].split("!!!time!!!")[0].replace(/linebreak/g, "<br>") + "</label><hr><p style=\"text-align:center; font-size:13px\"><i>Page " + pagenumber + "</i></p></article><br><br>"
+//console.log("Post: " + posts[i].split("!!!time!!!")[0] + "\nTime: " + posts[i].split("!!!time!!!")[1] + "\nUploader: " + posts[i].split("!!!uploader!!!")[1] + "\nPage Number: " + pagenumber)
+}
+}
+    document.getElementById("test").innerHTML = html;
+})
+.catch((err) => console.error('Error: %s', err))
+    
+    
+}
+
+        
+
+    </script>
+</html>
